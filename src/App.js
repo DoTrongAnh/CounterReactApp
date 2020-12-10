@@ -10,11 +10,13 @@ class Counter extends Component{
     };
     this.handleChange = this.handleChange.bind(this);
     this.handleSubmit = this.handleSubmit.bind(this);
+    this.handleKey = this.handleKey.bind(this);
   }
   handleChange(event){
     const num = parseInt(event.target.value);
+    const current = this.state.count;
     this.setState({
-      textFieldValue: isNaN(num)? 0 : num
+      textFieldValue: isNaN(num)? current : num
     });
   }
   countUp(){
@@ -31,6 +33,12 @@ class Counter extends Component{
     this.setState({count:a});
     event.preventDefault();
   }
+  handleKey(event){
+    if(event.key === "Enter"){
+      const a = this.state.textFieldValue;
+      this.setState({count:a});
+    }
+  }
   render(){
     let count = this.state.count;
     return (
@@ -39,7 +47,8 @@ class Counter extends Component{
           <form onSubmit={this.handleSubmit}>
             <label>
               An integer:
-              <input type="text" value={this.state.value} onChange={this.handleChange} />
+              <input type="text" value={this.state.value} 
+              onChange={this.handleChange} onKeyDown={this.handleKey} />
             </label>
             <input type="submit" style={{backgroundColor:'green',color:'white'}} value="Assign" />
           </form>
